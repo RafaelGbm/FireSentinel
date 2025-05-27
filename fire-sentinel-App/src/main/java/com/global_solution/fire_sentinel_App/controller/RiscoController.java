@@ -42,7 +42,6 @@ public class RiscoController {
     
     @GetMapping("/sensor/{sensorId}/historico")
     public ResponseEntity<List<Risco>> obterHistoricoRiscoPorSensor(@PathVariable Long sensorId) {
-        // Retorna o histórico de análises de risco para um sensor específico
         List<Risco> historicoRiscos = riscoService.obterHistoricoRiscoPorSensor(sensorId);
         return ResponseEntity.ok(historicoRiscos);
     }
@@ -52,7 +51,6 @@ public class RiscoController {
             @PathVariable Double latitude,
             @PathVariable Double longitude,
             @PathVariable Double raio) {
-        // Retorna as análises de risco para sensores dentro de uma área geográfica
         List<RiscoDTO> riscosNaArea = riscoService.obterRiscosPorArea(latitude, longitude, raio);
         return ResponseEntity.ok(riscosNaArea);
     }
