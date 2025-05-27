@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/fire-sentinel-App.iml" filepath="$PROJECT_DIR$/.idea/fire-sentinel-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/FireSentinel.iml" filepath="$PROJECT_DIR$/.idea/FireSentinel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fire-sentinel-App/fire-sentinel-App.iml" filepath="$PROJECT_DIR$/fire-sentinel-App/fire-sentinel-App.iml" />
     </modules>
   </component>
 </project>
