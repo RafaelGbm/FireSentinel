@@ -18,6 +18,17 @@ import com.global_solution.fire_sentinel_App.repository.SensorRepository;
 import com.global_solution.fire_sentinel_App.service.LeituraService;
 import com.global_solution.fire_sentinel_App.service.RiscoService;
 
+/**
+ * Implementação do serviço de gerenciamento de leituras de sensores.
+ * Responsável por processar e armazenar as leituras dos sensores do sistema.
+ * 
+ * Esta implementação fornece:
+ * - Registro de novas leituras
+ * - Consulta de histórico
+ * - Análise automática de risco
+ * - Processamento de dados em tempo real
+ * - Integração com serviço de risco
+ */
 @Service
 public class LeituraServiceImpl implements LeituraService {
 
@@ -30,6 +41,14 @@ public class LeituraServiceImpl implements LeituraService {
     @Autowired
     private RiscoService riscoService;
     
+    /**
+     * Registra uma nova leitura de sensor no sistema.
+     * Valida o sensor, persiste a leitura e dispara análise de risco.
+     *
+     * @param leituraDTO DTO contendo os dados da leitura
+     * @return Leitura entidade da leitura registrada
+     * @throws IllegalArgumentException se o sensor não for encontrado
+     */
     @Override
     public Leitura registrarLeitura(LeituraDTO leituraDTO) {
         Optional<Sensor> sensorOptional = sensorRepository.findById(leituraDTO.getSensorId());
@@ -53,21 +72,50 @@ public class LeituraServiceImpl implements LeituraService {
         return leituraSalva;
     }
 
+    /**
+     * Lista todas as leituras registradas no sistema.
+     *
+     * @return List<Leitura> lista com todas as leituras
+     */
     @Override
     public List<Leitura> listarTodas() {
         return leituraRepository.findAll();
     }
 
+    /**
+     * Busca uma leitura específica pelo seu ID.
+     *
+     * @param id ID da leitura a ser buscada
+     * @return Optional<Leitura> contendo a leitura se encontrada
+     */
     @Override
     public Optional<Leitura> buscarPorId(Long id) {
         return leituraRepository.findById(id);
     }
 
+    /**
+     * Busca todas as leituras de um sensor específico.
+     * As leituras são ordenadas por data/hora em ordem decrescente.
+     *
+     * @param sensorId ID do sensor para buscar as leituras
+     * @return List<Leitura> lista com as leituras do sensor
+     */
     @Override
     public List<Leitura> buscarPorSensor(Long sensorId) {
         return leituraRepository.findBySensorIdOrderByDataHoraDesc(sensorId);
     }
 
+    /**
+     * Obtém a última leitura registrada para cada sensor ativo.
+     * Útil para monitoramento em tempo real do estado dos sensores.
+     *
+     * O método:
+     * 1. Busca todas as leituras
+     * 2. Agrupa por sensor
+     * 3. Seleciona a leitura mais recente de cada grupo
+     *
+     * @return List<Leitura> lista com a última leitura de cada sensor
+     */
     @Override
     public List<Leitura> obterUltimasLeiturasPorSensor() {
         List<Leitura> todasLeituras = leituraRepository.findAll();

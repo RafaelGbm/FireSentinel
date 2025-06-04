@@ -17,6 +17,13 @@ import com.global_solution.fire_sentinel_App.dto.RiscoDTO;
 import com.global_solution.fire_sentinel_App.model.Risco;
 import com.global_solution.fire_sentinel_App.service.RiscoService;
 
+/**
+ * Controller REST para gerenciamento de análises de risco no sistema Fire Sentinel.
+ * Fornece endpoints para análise, consulta e monitoramento de riscos de incêndio.
+ * 
+ * @RestController indica que esta classe é um controlador REST
+ * @RequestMapping("/risco") mapeia todas as requisições para /risco
+ */
 @RestController
 @RequestMapping("/risco")
 public class RiscoController {
@@ -24,6 +31,13 @@ public class RiscoController {
     @Autowired
     private RiscoService riscoService;
     
+    /**
+     * Analisa o risco de incêndio com base em uma leitura de sensor.
+     * Utiliza o serviço de IA para processar os dados e gerar uma análise.
+     * 
+     * @param leituraDTO DTO contendo os dados da leitura para análise
+     * @return ResponseEntity com a análise de risco e status HTTP 200 (OK)
+     */
     @PostMapping("/analisar")
     public ResponseEntity<RiscoDTO> analisarRisco(@RequestBody LeituraDTO leituraDTO) {
         // Este endpoint recebe uma leitura e retorna uma análise de risco
@@ -32,6 +46,12 @@ public class RiscoController {
         return ResponseEntity.ok(riscoAnalise);
     }
     
+    /**
+     * Obtém a última análise de risco realizada para um sensor específico.
+     * 
+     * @param sensorId ID do sensor para buscar o último risco
+     * @return ResponseEntity com o último risco (200) ou não encontrado (404)
+     */
     @GetMapping("/{sensorId}")
     public ResponseEntity<RiscoDTO> obterUltimoRiscoPorSensor(@PathVariable Long sensorId) {
         // Retorna o último risco calculado para um sensor específico
@@ -40,12 +60,27 @@ public class RiscoController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
+    /**
+     * Retorna o histórico completo de análises de risco para um sensor.
+     * 
+     * @param sensorId ID do sensor para buscar o histórico
+     * @return ResponseEntity com a lista de riscos e status HTTP 200 (OK)
+     */
     @GetMapping("/sensor/{sensorId}/historico")
     public ResponseEntity<List<Risco>> obterHistoricoRiscoPorSensor(@PathVariable Long sensorId) {
         List<Risco> historicoRiscos = riscoService.obterHistoricoRiscoPorSensor(sensorId);
         return ResponseEntity.ok(historicoRiscos);
     }
     
+    /**
+     * Busca análises de risco em uma área geográfica específica.
+     * Útil para monitoramento de regiões e identificação de zonas de risco.
+     * 
+     * @param latitude Latitude do ponto central da busca
+     * @param longitude Longitude do ponto central da busca
+     * @param raio Raio em quilômetros para a busca
+     * @return ResponseEntity com a lista de riscos na área e status HTTP 200 (OK)
+     */
     @GetMapping("/area/{latitude}/{longitude}/{raio}")
     public ResponseEntity<List<RiscoDTO>> obterRiscosPorArea(
             @PathVariable Double latitude,
