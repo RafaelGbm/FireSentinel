@@ -2,18 +2,29 @@ package com.global_solution.fire_sentinel_App.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.UUID;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * Classe que representa uma ocorrência de incêndio ou risco de incêndio.
  * Esta classe é responsável por armazenar informações sobre eventos detectados,
  * incluindo sua localização, severidade, origem e descrição detalhada.
  */
+@Entity
+@Table(name = "ocorrencias")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ocorrencia {
     /**
      * Identificador único da ocorrência (UUID).
      */
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     /**
      * Região onde a ocorrência foi detectada.
@@ -28,7 +39,7 @@ public class Ocorrencia {
     /**
      * Data e hora em que a ocorrência foi registrada.
      */
-    private LocalDateTime dataHora;
+    private LocalDateTime dataHora = LocalDateTime.now();
     
     /**
      * Origem da detecção (ex: "Sensor IoT", "Denúncia", etc.).
@@ -41,88 +52,14 @@ public class Ocorrencia {
     private String descricao;
 
     /**
-     * Construtor para criar uma nova ocorrência.
+     * Construtor para criar uma nova ocorrência (mantido para compatibilidade).
      *
      * @param regiao Região onde a ocorrência foi detectada
      * @param severidade Nível de severidade da ocorrência (1-10)
      */
     public Ocorrencia(String regiao, int severidade) {
-        this.id = UUID.randomUUID().toString();
         this.regiao = regiao;
         this.severidade = severidade;
-        this.dataHora = LocalDateTime.now();
-    }
-
-    /**
-     * Obtém o ID da ocorrência.
-     * @return String contendo o UUID da ocorrência
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Obtém a região da ocorrência.
-     * @return String contendo o nome da região
-     */
-    public String getRegiao() {
-        return regiao;
-    }
-
-    /**
-     * Obtém o nível de severidade da ocorrência.
-     * @return int representando o nível de severidade (1-10)
-     */
-    public int getSeveridade() {
-        return severidade;
-    }
-
-    /**
-     * Obtém a data e hora da ocorrência.
-     * @return LocalDateTime com a data e hora do registro
-     */
-    public LocalDateTime getDataHora() {
-        return dataHora;
-    }
-
-    /**
-     * Define a data e hora da ocorrência.
-     * @param dataHora Nova data e hora para a ocorrência
-     */
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-
-    /**
-     * Obtém a origem da ocorrência.
-     * @return String contendo a fonte da detecção
-     */
-    public String getOrigem() {
-        return origem;
-    }
-
-    /**
-     * Define a origem da ocorrência.
-     * @param origem Nova origem para a ocorrência
-     */
-    public void setOrigem(String origem) {
-        this.origem = origem;
-    }
-
-    /**
-     * Obtém a descrição da ocorrência.
-     * @return String contendo a descrição detalhada
-     */
-    public String getDescricao() {
-        return descricao;
-    }
-
-    /**
-     * Define a descrição da ocorrência.
-     * @param descricao Nova descrição para a ocorrência
-     */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     /**

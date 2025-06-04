@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OcorrenciaDTO {
-    private String id;
+    private Long id;
     private String regiao;
     private int severidade;
     private LocalDateTime dataHora;

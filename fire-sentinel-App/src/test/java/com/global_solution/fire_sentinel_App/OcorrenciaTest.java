@@ -72,7 +72,6 @@ class OcorrenciaTest {
     
     @Test
     void testConstrutorEGetters() {
-        assertNotNull(ocorrencia.getId());
         assertEquals("Região Sul", ocorrencia.getRegiao());
         assertEquals(7, ocorrencia.getSeveridade());
         assertNotNull(ocorrencia.getDataHora());
