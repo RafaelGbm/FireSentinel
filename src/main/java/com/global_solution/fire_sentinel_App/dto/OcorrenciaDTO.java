@@ -54,6 +54,7 @@ public class OcorrenciaDTO {
      */
     public Ocorrencia toEntity() {
         Ocorrencia ocorrencia = new Ocorrencia(this.regiao, this.severidade);
+        ocorrencia.setId(this.id);
         ocorrencia.setDataHora(this.dataHora);
         ocorrencia.setOrigem(this.origem);
         ocorrencia.setDescricao(this.descricao);

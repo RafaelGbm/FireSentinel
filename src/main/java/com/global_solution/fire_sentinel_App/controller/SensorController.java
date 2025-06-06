@@ -36,8 +36,8 @@ public class SensorController {
     /**
      * Cadastra um novo sensor no sistema.
      * 
-     * @param sensorDTO DTO contendo os dados do sensor a ser cadastrado
-     * @return ResponseEntity com o sensor cadastrado e status HTTP 201 (CREATED)
+     * @param sesorDTO DTO contendo os dados do sensor a ser cadastrado
+     * @return RnesponseEntity com o sensor cadastrado e status HTTP 201 (CREATED)
      */
     @PostMapping
     public ResponseEntity<Sensor> cadastrarSensor(@RequestBody SensorDTO sensorDTO) {
