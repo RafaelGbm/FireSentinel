@@ -31,7 +31,7 @@ FireSentinel é uma aplicação Spring Boot para monitoramento de risco de incê
 ## 🏗️ Estrutura do Projeto
 
 ```
-src/main/java/com/global_solution/
+src/main/java/com/global_solution/fire_sentinel_App/
 ├── config/           # Configurações da aplicação
 ├── controller/       # Controladores REST
 ├── dto/              # Objetos de Transferência de Dados
@@ -161,50 +161,60 @@ O FireSentinel possui uma interface de linha de comando interativa para gerencia
 - **Ocorrências**: Utilize a classificação de severidade para priorizar ações
 - **Análise**: Verifique regularmente a análise de leituras para identificar tendências de risco
 
-## 📚 Documentação Adicional
+## 🧪 Testes Unitários
 
-### Métodos Operacionais
+O projeto inclui uma suíte de testes unitários para validar as funcionalidades principais. Os testes estão localizados no diretório `src/test/java/com/global_solution/fire_sentinel_App/`.
 
-1. **calcularRisco** (Sobrecarga)
-   ```java
-   /**
-    * Calcula o risco de incêndio com base nas leituras do sensor
-    * @param leitura Dados do sensor (temperatura, umidade, etc.)
-    * @return Nível de risco (BAIXO, MEDIO, ALTO, CRITICO)
-    */
-   public NivelRisco calcularRisco(Leitura leitura)
-   
-   /**
-    * Calcula o risco de incêndio com valores individuais
-    * @param temperatura Temperatura em graus Celsius
-    * @param umidade Umidade relativa do ar (%)
-    * @param fumaca Nível de fumaça detectado
-    * @return Nível de risco calculado
-    */
-   public NivelRisco calcularRisco(double temperatura, double umidade, double fumaca)
+### Testes Implementados
+
+#### 1. `SensorTest`
+Testes para a classe `Sensor` que incluem:
+- Verificação de inicialização correta dos atributos
+- Testes de métodos auxiliares
+- Validação de formatação de dados
+- Cálculo de estatísticas de leituras
+
+#### 2. `LeituraTest`
+Testes para a classe `Leitura` que incluem:
+- Cálculo do índice de risco
+- Validação de pesos no cálculo de risco
+- Tratamento de valores inválidos
+- Verificação de limites aceitáveis
+
+#### 3. `OcorrenciaTest`
+Testes para a classe `Ocorrencia` que incluem:
+- Cálculo de tempo decorrido
+- Verificação de ocorrências críticas
+- Validação de regras de negócio
+- Formatação de dados de saída
+
+#### 4. `SensorDataTest`
+Testes para a classe `SensorData` que incluem:
+- Validação de leituras de sensores
+- Cálculo de médias
+- Detecção de anomalias
+
+#### 5. `RiscoTest`
+Testes para a classe `Risco` que incluem:
+- Cálculo de níveis de risco
+- Validação de limites de segurança
+- Geração de alertas
+
+### Como Executar os Testes
+
+1. **Pelo Maven**
+   ```bash
+   mvn test
    ```
 
-2. **enviarAlerta** (Sobrescrita)
-   ```java
-   /**
-    * Envia alerta quando o nível de risco é alto
-    * @param risco Dados da análise de risco
-    * @return true se o alerta foi enviado com sucesso
-    */
-   @Override
-   public boolean enviarAlerta(Risco risco)
-   ```
+2. **Pela IDE**
+   - Clique com o botão direito no diretório `src/test/java`
+   - Selecione "Run Tests" ou use o atalho da sua IDE
 
-3. **buscarSensoresProximos**
-   ```java
-   /**
-    * Busca sensores em um raio específico
-    * @param latitude Coordenada de latitude
-    * @param longitude Coordenada de longitude
-    * @param raioEmKm Raio de busca em quilômetros
-    * @return Lista de sensores encontrados no raio
-    */
-   public List<Sensor> buscarSensoresProximos(double latitude, double longitude, double raioEmKm)
-   ```
+### Cobertura de Testes
 
-
+Os testes cobrem:
+- Validação de entradas
+- Lógica de negócio principal
+- Cálculos e transformações de dados
+- Regras de negócio críticas
